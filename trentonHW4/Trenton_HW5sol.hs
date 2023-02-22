@@ -24,8 +24,8 @@ type CmdRank = (Int, Int)
 
 semCmd :: Cmd -> Stack -> Result
 
-semCmd (LDI (I i)) s = A i:s
-semCmd (LDB (B b)) s = A b:s
+semCmd (LDI (I i)) s = (A i):s
+semCmd (LDB (B b)) s = (A b):s
 
 semCmd DUP [] = RankError
 semCmd DUP (x:xs) = A (x:x:xs)

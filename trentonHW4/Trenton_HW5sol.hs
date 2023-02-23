@@ -24,29 +24,29 @@ type CmdRank = (Int, Int)
 
 semCmd :: Cmd -> Stack -> Result
 
-semCmd (LDI (I i)) (A s) = A ((I i):s)
-semCmd (LDB (B b)) (A s) = A ((B b):s)
+semCmd (LDI (I i)) s = A ((I i):s)
+semCmd (LDB (B b)) s = A ((B b):s)
 
-semCmd DUP (A []) = RankError
-semCmd DUP (A (x:xs)) = A (x:x:xs)
+semCmd DUP [] = RankError
+semCmd DUP ( (x:xs)) = A (x:x:xs)
 
-semCmd ADD (A []) = RankError
-semCmd ADD (A ((I x):[])) = RankError
-semCmd ADD (A ((I x):(I y):s)) = A ((I (x+y)):s)
+semCmd ADD [] = RankError
+semCmd ADD ((I x):[]) = RankError
+semCmd ADD ((I x):(I y):s) = A ((I (x+y)):s)
 semCmd ADD _ = TypeError
 
-semCmd MULT (A []) = RankError
-semCmd MULT (A ((I x):[])) = RankError
-semCmd MULT (A ((I x):(I y):s)) = A ((I(x*y)):s)
+semCmd MULT [] = RankError
+semCmd MULT ((I x):[]) = RankError
+semCmd MULT ((I x):(I y):s) = A ((I(x*y)):s)
 semCmd MULT _ = RankError
 
-semCmd LEQ (A []) = RankError
-semCmd LEQ (A ((I x):[])) = RankError
-semCmd LEQ (A ((I x):(I y):s)) = A ((B (x<=y)):s)
+semCmd LEQ [] = RankError
+semCmd LEQ ((I x):[]) = RankError
+semCmd LEQ ((I x):(I y):s) = A ((B (x<=y)):s)
 semCmd LEQ _ = RankError
 
-semCmd (IFELSE t f) (A []) = RankError
-semCmd (IFELSE t f) (A ((B x):xs)) = run (if x then t else f) xs
+semCmd (IFELSE t f) [] = RankError
+semCmd (IFELSE t f) ((B x):xs) = run (if x then t else f) xs
 semCmd (IFELSE t f) _ = RankError
 
 run :: Prog -> Stack -> Result

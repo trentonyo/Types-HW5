@@ -2,24 +2,25 @@
 --youngtre@oregonstate.edu
 
 module HW5sol where
+import HW5types
 
 -- HW5types.hs
-type Prog = [Cmd]
-data Cmd = LDI Int | ADD | MULT | DUP | DEC
-		| SWAP | POP Int | IFELSE Prog Prog
-		| LDB Bool | LEQ
-         deriving Show
-
-data Val = I Int | B Bool
-		deriving Show
-
-type Stack = [Val]
-data Result = A Stack | RankError | TypeError
-          deriving Show
-
-type D = Stack -> Stack
-type Rank = Int
-type CmdRank = (Int, Int)
+--type Prog = [Cmd]
+--data Cmd = LDI Int | ADD | MULT | DUP | DEC
+--		| SWAP | POP Int | IFELSE Prog Prog
+--		| LDB Bool | LEQ
+--         deriving Show
+--
+--data Val = I Int | B Bool
+--		deriving Show
+--
+--type Stack = [Val]
+--data Result = A Stack | RankError | TypeError
+--          deriving Show
+--
+--type D = Stack -> Stack
+--type Rank = Int
+--type CmdRank = (Int, Int)
 -- /HW5types.hs
 
 semCmd :: Cmd -> Stack -> Result

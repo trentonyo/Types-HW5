@@ -1,6 +1,5 @@
-
-import HW5types
 import HW5sol
+import HW5types
 
 -- rankAll ( ranks all programs in pList and stacks sList)
 -- rankAllEmpty (ranks all programs in pList with an empty stack)

@@ -2,6 +2,7 @@
 --youngtre@oregonstate.edu
 
 module HW5sol where
+import HW5types
 
 -- HW5types.hs
 --type Prog = [Cmd]

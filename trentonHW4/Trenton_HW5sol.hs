@@ -31,7 +31,7 @@ semCmd DUP [] = RankError
 semCmd DUP (x:xs) = A (x:x:xs)
 
 semCmd DEC [] = RankError
-semCmd DEC ((I x):xs) = A ((x-1):xs)
+semCmd DEC ((I x):xs) = A (((I x)-1):xs)
 
 semCmd (POP _) [] = RankError
 semCmd (POP 1) (x:xs) = A xs

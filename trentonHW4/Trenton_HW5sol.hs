@@ -5,9 +5,9 @@ module HW5sol where
 
 -- HW5types.hs
 type Prog = [Cmd]
-data Cmd = LDI Val | ADD | MULT | DUP | DEC
-		| SWAP | POP Val | IFELSE Prog Prog
-		| LDB Val | LEQ
+data Cmd = LDI Int | ADD | MULT | DUP | DEC
+		| SWAP | POP Int | IFELSE Prog Prog
+		| LDB Bool | LEQ
          deriving Show
 
 data Val = I Int | B Bool

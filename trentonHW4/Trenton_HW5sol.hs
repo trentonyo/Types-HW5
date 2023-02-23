@@ -28,7 +28,18 @@ semCmd (LDI (I i)) s = A ((I i):s)
 semCmd (LDB (B b)) s = A ((B b):s)
 
 semCmd DUP [] = RankError
-semCmd DUP ( (x:xs)) = A (x:x:xs)
+semCmd DUP (x:xs) = A (x:x:xs)
+
+semCmd DEC [] = RankError
+semCmd DEC ((I x):xs) = A ((x-1):xs)
+
+semCmd (POP _) [] = RankError
+semCmd (POP 1) (x:xs) = A xs
+semCmd (POP k) (x:xs) = semCmd (POP (k-1)) xs
+
+semCmd SWAP [] = RankError
+semCmd SWAP (x:y:xs) = A (y:x:xs)
+semCmd SWAP _ = RankError
 
 semCmd ADD [] = RankError
 semCmd ADD ((I x):[]) = RankError

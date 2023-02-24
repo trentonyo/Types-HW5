@@ -45,7 +45,7 @@ s15 = [I 3, I 8]
 
 prettyERank :: [Prog] -> [Stack] -> String
 prettyERank [] _ = " "
---prettyERank (p:pp) (s:ss) = "p:"++show(p)++"  s:"++show(s)++" ==> "++show (rankP p (length s))++"\n\n"++ (prettyERank pp ss)
+prettyERank (p:pp) (s:ss) = "p:"++show(p)++"  s:"++show(s)++" ==> "++show (rankP p (length s))++"\n\n"++ (prettyERank pp ss)
 
 rankAll :: IO ()
 rankAll = putStrLn ("\nRank programs with stacks \n\n"++(prettyERank pList sList))

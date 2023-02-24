@@ -89,8 +89,8 @@ run _ []     = RankError                  --  An empty stack after all that? Err
 
 rankC :: Cmd -> CmdRank
 rankC ADD = (2, 1)
-rankC DUP = (1, 1)
-rankC LEQ = (2, 2)
+rankC DUP = (1, 2)
+rankC LEQ = (2, 1)
 rankC DEC = (1, 1)
 rankC MULT = (2, 1)
 rankC SWAP = (2, 2)

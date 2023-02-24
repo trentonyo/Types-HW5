@@ -101,6 +101,10 @@ rankC (LDB _) = (0, 1)
 
 rankP :: Prog -> Rank -> Maybe Rank
 rankP ((IFELSE t f):cs) r = Just ( min (rankP ([t]:cs) r) (rankP ([f]:cs) r) )--  Something like this where you take the min of the branches
-rankP (c:cs) r =  if fst (rankC c) > r    --  Checks if the first rank (what needs to be removed) is greater than the rank...
+rankP [c]     r = if fst (rankC c) > r    --  Checks if the first rank (what needs to be removed) is greater than the rank...
                     then Nothing          --  ...and if it is then it's a rank error
-                    else Just (rankP cs (r - (fst (rankC c)) + (snd (rankC c)))) --  Otherwise, move to the next Cmd and adjust the rank
+                    else Just (r - (fst (rankC c)) + (snd (rankC c)))  --  Otherwise, base case is reached and return r after the Cmd
+rankP (c:cs)  r = if fst (rankC c) > r    --  Checks if the first rank (what needs to be removed) is greater than the rank...
+                    then Nothing          --  ...and if it is then it's a rank error
+                    else rankP cs (r - (fst (rankC c)) + (snd (rankC c))) --  Otherwise, move to the next Cmd and adjust the rank
+rankP _ _       = Nothing

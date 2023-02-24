@@ -100,7 +100,7 @@ rankC (LDB _) = (0, 1)
 --  rankC (IFELSE t f) = --  hmmmmmmmmm maybe this doesn't get called but then there would be non-exhaustive pattern
 
 rankP :: Prog -> Rank -> Maybe Rank
-rankP ((IFELSE t f):cs) r = Just ( min (rankP (t++cs) r) (rankP (f++cs) r) )--  Something like this where you take the min of the branches
+rankP ((IFELSE t f):cs) r = Just ( min (Just (rankP (t++cs) r)) (Just (rankP (f++cs) r)) )--  Something like this where you take the min of the branches
 rankP [c]     r = if fst (rankC c) > r    --  Checks if the first rank (what needs to be removed) is greater than the rank...
                     then Nothing          --  ...and if it is then it's a rank error
                     else Just (r - (fst (rankC c)) + (snd (rankC c)))  --  Otherwise, base case is reached and return r after the Cmd

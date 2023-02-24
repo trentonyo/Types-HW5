@@ -76,6 +76,7 @@ run :: Prog -> Stack -> Result
 run [] x     = A x                        -- Once we have run out of cmds, return the remaining stack
 run (c:cs) s = case semCmd c s of
                   RankError -> RankError  -- If calling secCmd c s results in a RankError, we return a RankError
+                  TypeError -> TypeError  -- If calling secCmd c s results in a RankError, we return a RankError
                   A s' -> run cs s'       -- If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
 run _ []     = RankError                  -- An empty stack after all that? Errrrrrr
 

@@ -84,12 +84,8 @@ run _ []     = RankError                  -- An empty stack after all that? Errr
 
 -- ######### Rank stuff ######### --
 
---    |  |  |  |
---		|  |  | IFELSE Prog Prog
---		|
-
-type Rank = Int
-type CmdRank = (Rank, Rank)
+--type Rank = Int
+--type CmdRank = (Rank, Rank)
 
 rankC :: Cmd -> CmdRank
 rankC ADD = (2, 1)
@@ -101,4 +97,4 @@ rankC SWAP = (2, 2)
 rankC (POP k) = (k, 0)
 rankC (LDI _) = (0, 1)
 rankC (LDB _) = (0, 1)
---randC (IFELSE t f) = -- hmmmmmmmmm maybe this doesn't get called but then there would be non-exhaustive pattern
+--rankC (IFELSE t f) = -- hmmmmmmmmm maybe this doesn't get called but then there would be non-exhaustive pattern

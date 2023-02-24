@@ -33,6 +33,7 @@ semCmd DUP (x:xs) = A (x:x:xs)
 
 semCmd DEC [] = RankError
 semCmd DEC ((I x):xs) = A ((I (x-1)):xs)
+semCmd DEC ((B _):_) = TypeError
 
 semCmd (POP _) [] = RankError
 semCmd (POP 1) (x:xs) = A xs
@@ -42,23 +43,33 @@ semCmd SWAP [] = RankError
 semCmd SWAP (x:y:xs) = A (y:x:xs)
 semCmd SWAP _ = RankError
 
-semCmd ADD [] = RankError
-semCmd ADD ((I x):[]) = RankError
+--semCmd ADD [] = RankError
+--semCmd ADD ((I x):[]) = RankError
 semCmd ADD ((I x):(I y):s) = A ((I (x+y)):s)
-semCmd ADD _ = TypeError
+semCmd ADD ((B _):(I _):_) = TypeError
+semCmd ADD ((I _):(B _):_) = TypeError
+semCmd ADD ((B _):(B _):_) = TypeError
+semCmd ADD _ = RankError -- Will catch empty and one-element Stack
 
-semCmd MULT [] = RankError
-semCmd MULT ((I x):[]) = RankError
+--semCmd MULT [] = RankError
+--semCmd MULT ((I x):[]) = RankError
 semCmd MULT ((I x):(I y):s) = A ((I(x*y)):s)
-semCmd MULT _ = RankError
+semCmd MULT ((B _):(I _):_) = TypeError
+semCmd MULT ((I _):(B _):_) = TypeError
+semCmd MULT ((B _):(B _):_) = TypeError
+semCmd MULT _ = RankError -- Will catch empty and one-element Stack
 
-semCmd LEQ [] = RankError
-semCmd LEQ ((I x):[]) = RankError
+--semCmd LEQ [] = RankError
+--semCmd LEQ ((I x):[]) = RankError
 semCmd LEQ ((I x):(I y):s) = A ((B (x<=y)):s)
-semCmd LEQ _ = RankError
+semCmd LEQ ((B _):(I _):_) = TypeError
+semCmd LEQ ((I _):(B _):_) = TypeError
+semCmd LEQ ((B _):(B _):_) = TypeError
+semCmd LEQ _ = RankError -- Will catch empty and one-element Stack
 
-semCmd (IFELSE t f) [] = RankError
-semCmd (IFELSE t f) ((B x):xs) = run (if x then t else f) xs
+--semCmd (IFELSE t f) [] = RankError
+semCmd (IFELSE t f) ((B x):xs)  = run (if x then t else f) xs
+semCmd (IFELSE t f) ((I _):_)   = TypeError
 semCmd (IFELSE t f) _ = RankError
 
 run :: Prog -> Stack -> Result

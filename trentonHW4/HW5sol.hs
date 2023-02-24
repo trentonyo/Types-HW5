@@ -98,3 +98,9 @@ rankC (POP k) = (k, 0)
 rankC (LDI _) = (0, 1)
 rankC (LDB _) = (0, 1)
 --rankC (IFELSE t f) = -- hmmmmmmmmm maybe this doesn't get called but then there would be non-exhaustive pattern
+
+rankP :: Prog -> Rank -> Maybe Rank
+rankP ((IFELSE c t f):cs) r = min (rank ((t):cs) r) (rank ((f):cs) r) --Something like this where you take the min of the branches
+rankP (c:cs) r =  if fst (rankC c) > r    -- Checks if the first rank (what needs to be removed) is greater than the rank...
+                    then RankError        -- ...and if it is then it's a rank error
+                    else rankP cs (r - (fst (rankC c)) + (snd (rankC c))) -- Otherwise, move to the next Cmd and adjust the rank

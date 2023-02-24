@@ -23,6 +23,8 @@ import HW5types
 --type CmdRank = (Int, Int)
 -- /HW5types.hs
 
+-- ######### Run stuff ######### --
+
 semCmd :: Cmd -> Stack -> Result
 
 semCmd (LDI i) s = A ((I i):s)
@@ -80,3 +82,23 @@ run (c:cs) s = case semCmd c s of
                   A s' -> run cs s'       -- If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
 run _ []     = RankError                  -- An empty stack after all that? Errrrrrr
 
+-- ######### Rank stuff ######### --
+
+--    |  |  |  |
+--		|  |  | IFELSE Prog Prog
+--		|
+
+type Rank = Int
+type CmdRank = (Rank, Rank)
+
+rankC :: Cmd -> CmdRank
+rankC ADD = (2, 1)
+rankC DUP = (1, 1)
+rankC LEQ = (2, 2)
+rankC DEC = (1, 1)
+rankC MULT = (2, 1)
+rankC SWAP = (2, 2)
+rankC (POP k) = (k, 0)
+rankC (LDI _) = (0, 1)
+rankC (LDB _) = (0, 1)
+--randC (IFELSE t f) = -- hmmmmmmmmm maybe this doesn't get called but then there would be non-exhaustive pattern

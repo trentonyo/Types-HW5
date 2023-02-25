@@ -80,7 +80,7 @@ run (c:cs) s = case semCmd c s of
                   RankError -> RankError  --  If calling secCmd c s results in a RankError, we return a RankError
                   TypeError -> TypeError  --  If calling secCmd c s results in a RankError, we return a RankError
                   A s' -> run cs s'       --  If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
-run _ []     = RankError                  --  An empty stack after all that? Errrrrrr
+--run _ []     = RankError                  --  An empty stack after all that? Errrrrrr
 
 --  ######### Rank stuff ######### --
 
@@ -88,16 +88,16 @@ run _ []     = RankError                  --  An empty stack after all that? Err
 --  type CmdRank = (Rank, Rank)
 
 rankC :: Cmd -> CmdRank
-rankC ADD = (2, 1)
-rankC DUP = (1, 2)
-rankC LEQ = (2, 1)
+rankC ADD = (2, 1)        -- X
+rankC DUP = (1, 2)        -- X
+rankC LEQ = (2, 1)        -- X
 rankC DEC = (1, 1)
-rankC MULT = (2, 1)
+rankC MULT = (2, 1)        -- X
 rankC SWAP = (2, 2)
 rankC (POP k) = (k, 0)
-rankC (LDI _) = (0, 1)
-rankC (LDB _) = (0, 1)
---  rankC (IFELSE t f) This doesn't get called because of how rankP handles IFELSE, so here is a non-exhaustive pattern
+rankC (LDI _) = (0, 1)        -- X
+rankC (LDB _) = (0, 1)        -- X
+--  rankC (IFELSE t f)         -- X This doesn't get called because of how rankP handles IFELSE, so here is a non-exhaustive pattern
 
 rankP :: Prog -> Rank -> Maybe Rank
 rankP ((IFELSE t f):cs) r = min (rankP (t++cs) r) (rankP (f++cs) r) --  Something like this where you take the min of the branches

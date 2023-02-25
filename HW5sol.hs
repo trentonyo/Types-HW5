@@ -82,7 +82,7 @@ rankP [c]     r = if fst (rankC c) > r                                          
 rankP (c:cs)  r = if fst (rankC c) > r                                            -- Checks if the first rank (what needs to be removed) is greater than the rank...
                     then Nothing                                                  -- ...and if it is then it's a rank error
                     else rankP cs (r - (fst (rankC c)) + (snd (rankC c)))         -- Otherwise, move to the next Cmd and adjust the rank
-rankP _ _       = Nothing
+--rankP _ _       = Nothing
 
 rankFailRunSuccess = [LDB False, IFELSE [ADD, ADD, ADD, ADD] [LDI 42]]
 

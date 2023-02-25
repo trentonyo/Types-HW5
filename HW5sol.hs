@@ -82,3 +82,9 @@ rankP (c:cs)  r = if fst (rankC c) > r                                          
                     then Nothing                                                  -- ...and if it is then it's a rank error
                     else rankP cs (r - (fst (rankC c)) + (snd (rankC c)))         -- Otherwise, move to the next Cmd and adjust the rank
 rankP _ _       = Nothing
+
+rankFailRunSuccess = [LDB False, IFELSE [ADD, ADD, ADD, ADD] [LDI 42]]
+
+run rankFailRunSuccess []
+
+

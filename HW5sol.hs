@@ -85,6 +85,3 @@ rankP _ _       = Nothing
 
 rankFailRunSuccess = [LDB False, IFELSE [ADD, ADD, ADD, ADD] [LDI 42]]
 
-debugTest = run rankFailRunSuccess []
-
-

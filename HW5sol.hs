@@ -2,6 +2,7 @@
 
 module HW5sol where
 import HW5types
+import Data.Maybe
 
 --  ######### Run stuff ######### --
 

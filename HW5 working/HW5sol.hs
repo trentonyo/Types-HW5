@@ -1,4 +1,6 @@
 -- Trenton Young - youngtre@oregonstate.edu
+-- Julian Brinkley - brinklju@oregonstate.edu
+-- Jon Nelson - nelsojo4@oregonstate.edu
 
 module HW5sol where
 import HW5types
@@ -62,17 +64,7 @@ runHelper (c:cs) s = case semCmd c s of
                   RankError -> RankError        -- If calling secCmd c s results in a RankError, we return a RankError
                   TypeError -> TypeError        -- If calling secCmd c s results in a RankError, we return a RankError
                   A s' -> runHelper cs s'       -- If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
-
-
---run :: Prog -> Stack -> Result
---run _ []     = RankError                  -- An empty stack after all that? Errrrrrr
---run [] x     = A x                        -- Once we have run out of cmds, return the remaining stack
---run (c:cs) s = case semCmd c s of
---                  RankError -> RankError  -- If calling secCmd c s results in a RankError, we return a RankError
---                  TypeError -> TypeError  -- If calling secCmd c s results in a RankError, we return a RankError
---                  A s' -> run cs s'       -- If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
-
-
+                  
 
 -- ######### Rank stuff ######### --
 

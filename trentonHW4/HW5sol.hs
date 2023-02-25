@@ -100,7 +100,7 @@ rankC (LDB _) = (0, 1)        -- X
 --  rankC (IFELSE t f)         -- X This doesn't get called because of how rankP handles IFELSE, so here is a non-exhaustive pattern
 
 rankP :: Prog -> Rank -> Maybe Rank
-rankP ((IFELSE t f):cs) r = min (rankP (t++cs) r) (rankP (f++cs) r) --  Something like this where you take the min of the branches
+rankP ((IFELSE t f):cs) r = min (rankP (t++cs) (r - 1)) (rankP (f++cs) (r - 1)) --  Pops the top element (a bool) and checks the min path
 rankP [c]     r = if fst (rankC c) > r    --  Checks if the first rank (what needs to be removed) is greater than the rank...
                     then Nothing          --  ...and if it is then it's a rank error
                     else Just (r - (fst (rankC c)) + (snd (rankC c)))  --  Otherwise, base case is reached and return r after the Cmd

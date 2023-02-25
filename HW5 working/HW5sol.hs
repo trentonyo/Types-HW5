@@ -1,4 +1,6 @@
 -- Trenton Young - youngtre@oregonstate.edu
+-- Julian Brinkley - brinklju@oregonstate.edu
+-- Jon Nelson - nelsojo4@oregonstate.edu
 
 module HW5sol where
 import HW5types

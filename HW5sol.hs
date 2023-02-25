@@ -48,11 +48,16 @@ semCmd (IFELSE t f) ((I _):_)   = TypeError
 semCmd (IFELSE t f) _ = RankError
 
 run :: Prog -> Stack -> Result
-run [] x     = A x                        -- Once we have run out of cmds, return the remaining stack
-run (c:cs) s = case semCmd c s of
-                  RankError -> RankError  -- If calling secCmd c s results in a RankError, we return a RankError
-                  TypeError -> TypeError  -- If calling secCmd c s results in a RankError, we return a RankError
-                  A s' -> run cs s'       -- If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
+run p s = if isNothing (rankP p (length s))
+                  then runHelper p s
+                  else RankError
+
+runHelper :: Prog -> Stack -> Result
+runHelper [] x     = A x                        -- Once we have run out of Cmds, return the remaining stack
+runHelper (c:cs) s = case semCmd c s of
+                  RankError -> RankError        -- If calling secCmd c s results in a RankError, we return a RankError
+                  TypeError -> TypeError        -- If calling secCmd c s results in a RankError, we return a RankError
+                  A s' -> runHelper cs s'       -- If calling secCmd c s results in A (Result Stack) then recursively call run with the remaining cmd's on the Result Stack
 
 -- ######### Rank stuff ######### --
 
